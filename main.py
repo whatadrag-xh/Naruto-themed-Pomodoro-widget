@@ -13,7 +13,7 @@ focus_duration = 25 * 60
 rest_duration = 5 * 60
 
 FOCUS_ACCENT = "#E05C5C"
-REST_ACCENT  = "#4FC3A1"
+REST_ACCENT = "#4FC3A1"
 SHADOW = "#000000"
 WIN_W, WIN_H = 300, 380
 
@@ -32,7 +32,7 @@ chosen_file = random.choice(files)
 pil_img = Image.open(
     f"naruto-theme-pomodoro-wallpaper/{chosen_file}"
 ).resize((WIN_W, WIN_H))
-bg_photo    = ImageTk.PhotoImage(pil_img)
+bg_photo = ImageTk.PhotoImage(pil_img)
 canvas.create_image(0, 0, anchor="nw", image=bg_photo)
 
 def clock_style(secs):
@@ -52,8 +52,8 @@ def accent():
 
 FONT_SMALL = ("Arial", 11)
 
-focus_var  = tk.StringVar(value="25")
-rest_var   = tk.StringVar(value="5")
+focus_var = tk.StringVar(value="25")
+rest_var = tk.StringVar(value="5")
 cycles_var = tk.StringVar(value="4")
 
 def make_entry_row(y, label_text, textvariable):
@@ -63,7 +63,7 @@ def make_entry_row(y, label_text, textvariable):
     canvas.create_text(25, y+1, text=label_text, anchor="w",
                        fill=SHADOW, font=FONT_SMALL)
     
-    canvas.create_text(24, y,   text=label_text, anchor="w",
+    canvas.create_text(24, y, text=label_text, anchor="w",
                        fill="#FF6B00", font=FONT_SMALL)
     
     ent = tk.Entry(root, textvariable=textvariable,
@@ -100,8 +100,8 @@ def make_canvas_button(x, y, w, h, label, command, label_color="#FF6B00"):
 
     for item in (rect_id, text_id):
         canvas.tag_bind(item, "<Button-1>", on_click)
-        canvas.tag_bind(item, "<Enter>",    on_enter)
-        canvas.tag_bind(item, "<Leave>",    on_leave)
+        canvas.tag_bind(item, "<Enter>", on_enter)
+        canvas.tag_bind(item, "<Leave>", on_leave)
 
     return rect_id, text_id
 
@@ -222,7 +222,7 @@ def reset_timer():
 BTN_Y = 110
 set_btn_rect, _ = make_canvas_button(14, BTN_Y, 80, 28, "Set", set_settings)
 play_rect, play_btn_text = make_canvas_button(110, BTN_Y, 80, 28, "▶", toggle_timer)
-_, _= make_canvas_button(206, BTN_Y, 80, 28, "↺", reset_timer)
+_ , _= make_canvas_button(206, BTN_Y, 80, 28, "↺", reset_timer)
 
 rebuild_dots()
 
