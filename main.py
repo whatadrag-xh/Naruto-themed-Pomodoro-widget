@@ -1,4 +1,4 @@
-import tkinter as tk
+import customtkinter as ctk
 
 remaining_seconds = 25 * 60
 current_state = "focusing"
@@ -8,20 +8,20 @@ total_cycles = 4
 focus_duration = 25 * 60
 rest_duration = 5 * 60
 
-root = tk.Tk()
+root = ctk.CTk()
 root.title("Pomodoro Timer")
-root.geometry("300x300")
+root.geometry("300x350")
 
-focus_entry = tk.Entry(root)
-focus_entry.pack()
+focus_entry = ctk.CTkEntry(root)
+focus_entry.pack(pady=5)
 focus_entry.insert(0, "25")
 
-rest_entry = tk.Entry(root)
-rest_entry.pack()
+rest_entry = ctk.CTkEntry(root)
+rest_entry.pack(pady=5)
 rest_entry.insert(0, "5")
 
-cycles_entry = tk.Entry(root)
-cycles_entry.pack()
+cycles_entry = ctk.CTkEntry(root)
+cycles_entry.pack(pady=5)
 cycles_entry.insert(0, "4")
 
 def clock_style(remaining_seconds):
@@ -41,13 +41,7 @@ def set_settings():
         focus_duration = focus_minutes * 60
         rest_duration = rest_minutes * 60
         
-        remaining_seconds = focus_duration
-        current_state = "focusing"
-        current_cycle = 0
-        is_running = False
-        
-        timer_label.config(text=clock_style(remaining_seconds))
-        start_pause_button.config(text="▶")
+        reset_timer()
     except ValueError:
         print("Please enter a valid number.")
 
@@ -73,7 +67,7 @@ def tick():
     else:
         remaining_seconds -= 1
     
-    timer_label.config(text=clock_style(remaining_seconds))
+    timer_label.configure(text=clock_style(remaining_seconds))
     root.after(1000, tick)
 
 def toggle_timer():
@@ -81,10 +75,10 @@ def toggle_timer():
     
     if is_running:
         is_running = False
-        start_pause_button.config(text="▶")
+        start_pause_button.configure(text="▶")
     else:
         is_running = True
-        start_pause_button.config(text="||")
+        start_pause_button.configure(text="||")
         tick()
 
 def reset_timer():
@@ -95,19 +89,22 @@ def reset_timer():
     remaining_seconds = focus_duration
     current_cycle = 0
     
-    timer_label.config(text=clock_style(remaining_seconds))
-    start_pause_button.config(text="▶")
+    timer_label.configure(text=clock_style(remaining_seconds))
+    start_pause_button.configure(text="▶")
 
-set_button = tk.Button(root, text="Set", command=set_settings)
-set_button.pack()
+button_frame = ctk.CTkFrame(root)
+button_frame.pack(pady=10)
 
-start_pause_button = tk.Button(root, text="▶", command=toggle_timer)
-start_pause_button.pack()
+set_button = ctk.CTkButton(button_frame, text="Set", command=set_settings, width=80)
+set_button.grid(row=0, column=0, padx=5)
 
-reset_button = tk.Button(root, text="↺", command=reset_timer)
-reset_button.pack()
+start_pause_button = ctk.CTkButton(button_frame, text="▶", command=toggle_timer, width=80)
+start_pause_button.grid(row=0, column=1, padx=5)
 
-timer_label = tk.Label(root, text=clock_style(remaining_seconds), font=("Arial", 40))
-timer_label.pack()
+reset_button = ctk.CTkButton(button_frame, text="↺", command=reset_timer, width=80)
+reset_button.grid(row=0, column=2, padx=5)
+
+timer_label = ctk.CTkLabel(root, text=clock_style(remaining_seconds), font=("Arial", 40))
+timer_label.pack(pady=20)
 
 root.mainloop()
